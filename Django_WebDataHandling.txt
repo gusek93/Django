@@ -1,0 +1,79 @@
+django 기본적인 사용 방법(데이터 핸들링 방법), 구조
+
+
+MVC 기반으로 웹 개발
+M - model(데이터)
+V - view(UI)
+C - controller(UI 요청 처리 )
+
+장고 MVT
+M - model(데이터)
+V - view(UI 요청 처리)
+T - template (UI)
+
+로 구분 할 수 있다. 
+
+--------------------------------------------------------------------------
+
+Django 의 기본적인 구조는 가상 환경 프로젝트 안에 기능별 app을 생성 해서 만든다.
+
+기본적인 실행은 manage.py로 실행 하며, settings.py 에서 DB연결등 장고 프로젝트의 설정값을 정할수 있다. 
+
+---------------------------------------------------------------------------
+
+1.urls.py
+ - url 경로 뒤에 붙는 정보를 작성한다. 
+
+예)
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('write/', write, name='wirte'),
+    path('list', list, name='list'),
+    url(r'^view/(?P<num>[0-9]+)/$', view),
+]
+
+2.views.py
+ - request 응답이 오면 처리를 해주는 부분
+ - 함수로 작성 해서 return 한다. 
+
+예)
+def list(request):
+    articleList = Article.objects.all()
+    return render(request, 'list.htm', {'articleList': articleList})
+
+3.models.py
+ - 프로젝트에 필요한 데이터 작성 부분
+ - RDBMS의 테이블 작성시 데이터 입력 하는 것과 동일한 역할
+ - 장고는 class 의 함수로 데이터를 작성후 migration 을 하면 자동으로 테이블을 생성 해준다.
+ 
+예)
+class Article(models.Model):
+    name = models.CharField(max_length=50)
+    title = models.CharField(max_length=50)
+    contents = models.TextField()
+    url = models.URLField()
+    email = models.EmailField()
+    cdate = models.DateTimeField(auto_now_add=True)
+
+4.forms.py
+ - model 의 데이터를 담아서 HTML 의 form 테그에서 사용 할수 있게 작성 하는 부분
+
+예)
+class Form(ModelForm):
+    class Meta:
+        model = Article
+        fields = ['name', 'title', 'contents', 'url', 'email']
+
+
+5.templates 폴더
+ - html 파일을 담아 두는 폴더
+ - T(view) 역할
+
+
+
+
+
+
+
+
+
