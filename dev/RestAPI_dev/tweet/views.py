@@ -11,9 +11,9 @@ def get_tweet(request):
     })
 
 
-def get_username(request):
-    #request.GET['username', '']
-    username = 'dayong'
+def get_username(request, username):
+    #username = request.GET['username', '']
+    #username = 'dayong'
     qs = Tweets.objects.filter(username=username)
 
     return render(request, 'tweet/get_username.htm', {
