@@ -7,6 +7,7 @@ app_name = "excel"
 
 urlpatterns = [
     path("", views.uploadFile, name="uploadFile"),
+    path("download/", views.downloadFile, name="downloadFile")
 ]
 
 
