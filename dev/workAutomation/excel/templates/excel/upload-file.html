@@ -36,35 +36,20 @@
     </style>
 </head>
 <body>
+    <label>월급종합유형1</label>
     <form action="{% url 'excel:uploadFile' %}" method="POST" enctype="multipart/form-data">
-        <input type="text" name="fileTitle" placeholder="Enter a title">
+        <input type="read" name="fileTitle" placeholder="Enter a title">
         <input type="file" name="uploadedFile">
         {% csrf_token %}
         <input type="submit" value="Upload">
     </form>
     <div>
-        <label>첨부 파일</label>
+        <label>월급종합유형1</label>
         <form action="{% url 'excel:downloadFile'  %}">
         <button type="submit">
-        다운로드?
+        다운로드
         </button>
     </form>
     </div>
-    <table>
-        <tr>
-            <th>ID</th>
-            <th>Title</th>
-            <th>File Path</th>
-            <th>Upload Date & Time</th>
-        </tr>
-        {% for file in files %}
-            <tr>
-                <td>{{ file.id }}</td>
-                <td>{{ file.title }}</td>
-                <td>{{ file.uploadedFile.url }}</td>
-                <td>{{ file.dateTimeOfUpload }}</td>
-            </tr>
-        {% endfor %}
-    </table>
 </body>
 </html>

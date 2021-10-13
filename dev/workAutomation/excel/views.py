@@ -8,23 +8,39 @@ from django.core.files.storage import FileSystemStorage
 
 
 def uploadFile(request):
+    # print("hi")
     if request.method == "POST":
         # Fetching the form data
         fileTitle = request.POST["fileTitle"]
         uploadedFile = request.FILES["uploadedFile"]
 
-        # Saving the information in the database
-        document = models.Document(
-            title=fileTitle,
-            uploadedFile=uploadedFile
-        )
-        document.save()
+        # print(uploadedFile)
+        if "급상여" == fileTitle:
+            salarycalculate = models.SalaryCalculate(
+                title=fileTitle,
+                uploadedFile=uploadedFile
+            )
+            salarycalculate.save()
 
-    documents = models.Document.objects.all()
+        elif "사원명부" == fileTitle:
+            employeelist = models.EmployeeList(
+                title=fileTitle,
+                uploadedFile=uploadedFile
+            )
+            employeelist.save()
 
-    return render(request, "excel/upload-file.html", context={
-        "files": documents
-    })
+        elif "급여지급" == fileTitle:
+            salarysum = models.SalarySum(
+                title=fileTitle,
+                uploadedFile=uploadedFile
+            )
+            salarysum.save()
+
+            models.SalaryCalculate.objects.all()
+            models.EmployeeList.objects.all()
+            models.SalarySum.objects.all()
+
+    return render(request, "excel/upload-file.html")
 
 
 def downloadFile(request):
@@ -33,6 +49,6 @@ def downloadFile(request):
     fs = FileSystemStorage(file_path)
     response = FileResponse(fs.open(file_name, 'rb'),
                             content_type='application/vnd.ms-excel')
-    response['Content-Disposition'] = 'attachment; filename="saler.xlsx"'
+    response['Content-Disposition'] = f'attachment; filename="salary.xlsx"'
 
     return response

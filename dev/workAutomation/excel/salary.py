@@ -3,11 +3,11 @@ import warnings
 
 
 def bonus():
-
+    path = "/Users/dayong/project/Django/dev/workAutomation/media/salary/급여지급내역.xlsx"
     with warnings.catch_warnings(record=True):
         warnings.simplefilter("always")
-        df = pd.read_excel(
-            "/Users/dayong/project/algorithm/cvstest/cvsdata/부산환경_2019_급여지급현황(전체)_20211001_111035_.xlsx", engine="openpyxl", header=5, usecols="B,G,H,N,Q,U")
+        df = pd.read_excel(path, engine="openpyxl",
+                           header=5, usecols="B,G,H,N,Q,U")
 
     data = df.dropna(how='all')
 # print(data)
