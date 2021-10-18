@@ -28,9 +28,9 @@ class EmployeeList(models.Model):
 
 
 class Exceltestdata(models.Model):
-    code = models.CharField(max_length=200)
-    name = models.CharField(max_length=200)
-    ssnum = models.CharField(max_length=300)
-    onemonth = models.CharField(max_length=200, null=True)
-    twomonth = models.CharField(max_length=200, null=True)
-    thmonth = models.CharField(max_length=200, null=True)
+    code = models.CharField(max_length=500)
+    name = models.CharField(max_length=500)
+    ssnum = models.CharField(max_length=500)
+    onemonth = models.CharField(max_length=500, null=True)
+    twomonth = models.CharField(max_length=500, null=True)
+    thmonth = models.CharField(max_length=500, null=True)

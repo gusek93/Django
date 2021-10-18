@@ -24,26 +24,28 @@ with warnings.catch_warnings(record=True):
 data = df.dropna(how='all')
 #list_from_df = data.values.tolist()
 
-# print(data)
+#print(data.NAME)
 
 
-# exceltestdata = models.Exceltestdata(
+# exceltestdata = Exceltestdata(
 #     data
 # )
 # exceltestdata.save()
 
-# for dbfram in data.itertuples():
-#     obj = Exceltestdata.objects.create(
-#         code=data.CODE,
-#         name=data.NAME,
-#         ssnum=data.SSNUM,
-#         onemonth=ONE,
-#         twomonth=TWO,
-#         thmonth=THREE
-#     )
-#     obj.sava()
-print(Exceltestdata.objects.all())
+for dbfram in data.itertuples():
+    #print(dbfram)
+    obj = Exceltestdata.objects.create(
+        code=dbfram.CODE,
+        name=dbfram.NAME,
+        ssnum=dbfram.SSNUM,
+        onemonth=dbfram.ONE,
+        twomonth=dbfram.TWO,
+        thmonth=dbfram.THREE,
+    )
+    obj.save()
+#print(Exceltestdata.objects.all())
 
 #print(data)
 #print(exceldataRe())
 #print(dir())
+
