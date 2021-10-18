@@ -1,39 +1,49 @@
-from numpy.core.fromnumeric import shape
+import os
+import sys
+sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)) + '/app')))
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'workAutomation.settings')
+import django
+django.setup()
+
+
 import pandas as pd
 import warnings
 
+from excel.models import Exceltestdata
+#from test import exceldataRe
+#import sys
 # 엑셀 읽어오기
+
 with warnings.catch_warnings(record=True):
     warnings.simplefilter("always")
     df = pd.read_excel(
-        "/Users/dayong/project/algorithm/cvstest/cvsdata/급상여_추가_보완.xlsx", engine="openpyxl", header=6, usecols="C,D,E,F,H,J,L")
-
-    # df2 = pd.read_excel(
-    #     "/Users/dayong/project/algorithm/cvstest/cvsdata/급상여_추가_보완.xlsx", engine="openpyxl", header=6, usecols="F")
+        "/Users/dayong/project/algorithm/cvstest/cvsdata/급상여.xlsx", engine="openpyxl")
 
 
-# NaN 데이터 제외한 데이터 출력
+#NaN 데이터 제외한 데이터 출력
 data = df.dropna(how='all')
-list_from_df = data.values.tolist()
+#list_from_df = data.values.tolist()
 
-# data2 = df2.dropna(how='all')
-# list_from_df2 = df2.values.tolist()
+# print(data)
 
-# print(list_from_df2)
 
-# resultlist = []
-# for i in range(0, df2.shape[0]):
-#     resultlist.append(list_from_df2[i][0])
+# exceltestdata = models.Exceltestdata(
+#     data
+# )
+# exceltestdata.save()
 
-data.columns = ["코드", "성명", "주민번호", "지급총액", "지급액1", "지급액2", "지급액3"]
-result = data.sort_values('코드')
+# for dbfram in data.itertuples():
+#     obj = Exceltestdata.objects.create(
+#         code=data.CODE,
+#         name=data.NAME,
+#         ssnum=data.SSNUM,
+#         onemonth=ONE,
+#         twomonth=TWO,
+#         thmonth=THREE
+#     )
+#     obj.sava()
+print(Exceltestdata.objects.all())
 
-# print(result)
-datalist = []
-list_df = result.values.tolist()
-
-for i in range(0, result.shape[0]):
-    datalist.append()
-
-print(result.shape[0])
-# result.to_excel('급상여test.xlsx')
+#print(data)
+#print(exceldataRe())
+#print(dir())

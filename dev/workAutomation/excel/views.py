@@ -1,4 +1,3 @@
-from django.db.models.query import QuerySet
 from django.shortcuts import render
 from . import models
 import os
@@ -59,3 +58,5 @@ def downloadFile(request):
     response['Content-Disposition'] = f'attachment; filename="salary.xlsx"'
 
     return response
+
+
