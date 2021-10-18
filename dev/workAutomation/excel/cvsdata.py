@@ -22,30 +22,30 @@ with warnings.catch_warnings(record=True):
 
 #NaN 데이터 제외한 데이터 출력
 data = df.dropna(how='all')
-#list_from_df = data.values.tolist()
-
-#print(data.NAME)
 
 
-# exceltestdata = Exceltestdata(
-#     data
-# )
-# exceltestdata.save()
+# 엑셀 데이터 db insert
+# for dbfram in data.itertuples():
+#     #print(dbfram)
+#     obj = Exceltestdata.objects.create(
+#         code=dbfram.CODE,
+#         name=dbfram.NAME,
+#         ssnum=dbfram.SSNUM,
+#         onemonth=dbfram.ONE,
+#         twomonth=dbfram.TWO,
+#         thmonth=dbfram.THREE,
+#     )
+#     obj.save()
 
-for dbfram in data.itertuples():
-    #print(dbfram)
-    obj = Exceltestdata.objects.create(
-        code=dbfram.CODE,
-        name=dbfram.NAME,
-        ssnum=dbfram.SSNUM,
-        onemonth=dbfram.ONE,
-        twomonth=dbfram.TWO,
-        thmonth=dbfram.THREE,
-    )
-    obj.save()
-#print(Exceltestdata.objects.all())
 
-#print(data)
-#print(exceldataRe())
-#print(dir())
+# db 데이터 엑셀 insert
+obj = Exceltestdata.objects.all().values_list()
+resultdata = []
+for i in obj:
+    resultdata.append(i)
 
+result = pd.DataFrame(resultdata)
+result.columns = ["NO","코드","사원명","주민번호","1월","2월","3월"]
+print(result)
+
+result.to_excel('../media/result/dbDataExcel.xlsx')
