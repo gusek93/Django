@@ -1,9 +1,10 @@
 from django.shortcuts import render
-from . import models
+from . import models, payment
 import os
 import shutil
 from django.http import FileResponse
 from django.core.files.storage import FileSystemStorage
+
 # Create your views here.
 
 
@@ -12,8 +13,9 @@ def uploadFile(request):
     if request.method == "POST":
         fileTitle = request.POST["fileTitle"]
         uploadedFile = request.FILES["uploadedFile"]
+        
 
-        if "급상여" == fileTitle:
+        if "급상여" == fileTitle:        
             file_path = os.path.abspath("media/salaryCalculate/")
             shutil.rmtree(file_path)
             os.mkdir(file_path)
@@ -23,6 +25,8 @@ def uploadFile(request):
                 uploadedFile=uploadedFile
             )
             salarycalculate.save()
+            payment.payment()
+            
 
         elif "사원명부" == fileTitle:
             file_path = os.path.abspath("media/employeeList/")

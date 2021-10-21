@@ -25,17 +25,17 @@ data = df.dropna(how='all')
 
 
 # 엑셀 데이터 db insert
-# for dbfram in data.itertuples():
-#     #print(dbfram)
-#     obj = Exceltestdata.objects.create(
-#         code=dbfram.CODE,
-#         name=dbfram.NAME,
-#         ssnum=dbfram.SSNUM,
-#         onemonth=dbfram.ONE,
-#         twomonth=dbfram.TWO,
-#         thmonth=dbfram.THREE,
-#     )
-#     obj.save()
+for dbfram in data.itertuples():
+    #print(dbfram)
+    obj = Exceltestdata.objects.create(
+        code=dbfram.CODE,
+        name=dbfram.NAME,
+        ssnum=dbfram.SSNUM,
+        onemonth=dbfram.ONE,
+        twomonth=dbfram.TWO,
+        thmonth=dbfram.THREE,
+    )
+    obj.save()
 
 
 # db 데이터 엑셀 insert
@@ -48,4 +48,4 @@ result = pd.DataFrame(resultdata)
 result.columns = ["NO","코드","사원명","주민번호","1월","2월","3월"]
 print(result)
 
-result.to_excel('../media/result/dbDataExcel.xlsx')
+#result.to_excel('../media/result/dbDataExcel.xlsx')
