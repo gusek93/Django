@@ -1,5 +1,7 @@
 from django.shortcuts import render
-from . import models, payment
+
+#from excel.taxfree import taxfree
+from . import models, payment, taxfree
 import os
 import shutil
 from django.http import FileResponse
@@ -15,16 +17,16 @@ def uploadFile(request):
         uploadedFile = request.FILES["uploadedFile"]
         
 
-        if "급상여" == fileTitle:        
-            file_path = os.path.abspath("media/salaryCalculate/")
+        if "나누기" == fileTitle:        
+            file_path = os.path.abspath("media/paymentDivision/")
             shutil.rmtree(file_path)
             os.mkdir(file_path)
 
-            salarycalculate = models.SalaryCalculate(
+            paymentdivision = models.PaymentDivision(
                 title=fileTitle,
                 uploadedFile=uploadedFile
             )
-            salarycalculate.save()
+            paymentdivision.save()
             payment.payment()
             
 
@@ -39,23 +41,24 @@ def uploadFile(request):
             )
             employeelist.save()
 
-        elif "급여지급" == fileTitle:
-            file_path = os.path.abspath("media/salarySum/")
+        elif "빼기" == fileTitle:
+            file_path = os.path.abspath("media/taxfreeSubtraction/")
             shutil.rmtree(file_path)
             os.mkdir(file_path)
 
-            salarysum = models.SalarySum(
+            taxfreeSubtraction = models.TaxfreeSubtraction(
                 title=fileTitle,
                 uploadedFile=uploadedFile
             )
-            salarysum.save()
+            taxfreeSubtraction.save()
+            taxfree.taxfree()
 
     return render(request, "excel/upload-file.html")
 
 
 def downloadFile(request):
     file_path = os.path.abspath("media/result/")
-    file_name = os.path.basename("media/result/급여지급현황.xlsx")
+    file_name = os.path.basename("media/result/12개월나누기.xlsx")
     fs = FileSystemStorage(file_path)
     response = FileResponse(fs.open(file_name, 'rb'),
                             content_type='application/vnd.ms-excel')

@@ -1,19 +1,19 @@
 import os
 import sys
+import glob
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)) + '/app')))
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'workAutomation.settings')
 import django
 django.setup()
 
-
 import pandas as pd
 import warnings
 
-#from excel.models import Exceltestdata
-#from test import exceldataRe
-#import sys
 # 엑셀 읽어오기
-excelpath = "/Users/dayong/project/algorithm/cvstest/cvsdata/2017년_비과세.xlsx"
+file_path = glob.glob('./media/taxfreeSubtraction/*')
+list_excel = [file for file in file_path if file.endswith(".xlsx")]
+excelpath = list_excel[0]
+
 
 def taxfree():
     with warnings.catch_warnings(record=True):
@@ -40,7 +40,6 @@ def taxfree():
         salcaculater.append(list_from_df[i][2] - list_from_df[i][3])
         i += 3
 
-    #print(salcaculater)
 
     j = 2
     x = 0
@@ -51,7 +50,6 @@ def taxfree():
         j += 3
         x +=1
  
-    #print(sal_list)
 
     num_list_data = pd.DataFrame(num_list)
     name_list_data = pd.DataFrame(name_list)
@@ -62,10 +60,10 @@ def taxfree():
     
     result = pd.concat([num_list_data,name_list_data,car_list_data,run_list_data,sal_list_data,salcaculater2], axis=1)
     
-    print(result)
+    #print(result)
     
     #df.to_excel('../media/result/계산성공.xlsx')
-    result.to_excel('../media/result/식대계산용.xlsx')
+    result.to_excel('./media/result/taxfree/빼기성공.xlsx')
     #print(num_list,name_list,car_list,run_list)
 
-taxfree()
+#taxfree()
