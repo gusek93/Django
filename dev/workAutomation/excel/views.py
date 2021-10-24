@@ -1,5 +1,8 @@
+from django.http.response import JsonResponse
 from django.shortcuts import render
-from . import models, payment
+
+#from excel.taxfree import taxfree
+from . import models, payment, taxfree
 import os
 import shutil
 from django.http import FileResponse
@@ -9,23 +12,22 @@ from django.core.files.storage import FileSystemStorage
 
 
 def uploadFile(request):
-
-    if request.method == "POST":
+    if request.method == "POST":       
         fileTitle = request.POST["fileTitle"]
         uploadedFile = request.FILES["uploadedFile"]
         
-
-        if "급상여" == fileTitle:        
-            file_path = os.path.abspath("media/salaryCalculate/")
+        if "나누기" == fileTitle:        
+            file_path = os.path.abspath("media/paymentDivision/")
             shutil.rmtree(file_path)
             os.mkdir(file_path)
 
-            salarycalculate = models.SalaryCalculate(
+            paymentdivision = models.PaymentDivision(
                 title=fileTitle,
                 uploadedFile=uploadedFile
             )
-            salarycalculate.save()
-            payment.payment()
+            paymentdivision.save()
+            #print("시작합니다")
+            #payment.payment()
             
 
         elif "사원명부" == fileTitle:
@@ -39,27 +41,65 @@ def uploadFile(request):
             )
             employeelist.save()
 
-        elif "급여지급" == fileTitle:
-            file_path = os.path.abspath("media/salarySum/")
+        elif "빼기" == fileTitle:
+            file_path = os.path.abspath("media/taxfreeSubtraction/")
             shutil.rmtree(file_path)
             os.mkdir(file_path)
 
-            salarysum = models.SalarySum(
+            taxfreeSubtraction = models.TaxfreeSubtraction(
                 title=fileTitle,
                 uploadedFile=uploadedFile
             )
-            salarysum.save()
+            taxfreeSubtraction.save()
+            #taxfree.taxfree()
+        else:
+            data = {
+                "error":"파일명 다시 확인"
+            }
+            JsonResponse(data)
+        
 
     return render(request, "excel/upload-file.html")
 
+def transPayment(request):
+    payment.payment()
+    data = {
+        "status":"success"
+    }
+    return JsonResponse(data)
 
-def downloadFile(request):
-    file_path = os.path.abspath("media/result/")
-    file_name = os.path.basename("media/result/급여지급현황.xlsx")
+def transTaxfree(request):
+    taxfree.taxfree()
+    data = {
+        "status":"success"
+    }
+    return JsonResponse(data)
+
+# def transPayment(request):
+#     #request.POST["payment"]
+#     payment.payment()
+#     data = {
+#         "status":"success"
+#     }
+#     return JsonResponse(data)
+
+def downloadPayment(request):
+    file_path = os.path.abspath("media/result/payment/")
+    file_name = os.path.basename("media/result/payment/나누기성공.xlsx")
     fs = FileSystemStorage(file_path)
     response = FileResponse(fs.open(file_name, 'rb'),
                             content_type='application/vnd.ms-excel')
-    response['Content-Disposition'] = f'attachment; filename="salary.xlsx"'
+    response['Content-Disposition'] = f'attachment; filename="division.xlsx"'
+
+    return response
+
+def downloadTaxfree(request):
+    file_path = os.path.abspath("media/result/taxfree/")
+    file_name = os.path.basename("media/result/taxfree/빼기성공.xlsx")
+    fs = FileSystemStorage(file_path)
+    response = FileResponse(fs.open(file_name, 'rb'),
+                            content_type='application/vnd.ms-excel')
+    response['Content-Disposition'] = f'attachment; filename="Subtraction.xlsx"'
 
     return response
 

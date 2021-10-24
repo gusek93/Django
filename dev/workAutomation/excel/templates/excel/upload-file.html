@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <title>Django File Upload</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
@@ -36,20 +37,31 @@
     </style>
 </head>
 <body>
-    <label>월급종합유형1</label>
-    <form action="{% url 'excel:uploadFile' %}" method="POST" enctype="multipart/form-data">
+    <label>Upload</label>
+    <form id="upload" action="{% url 'excel:uploadFile' %}" method="POST" enctype="multipart/form-data">
         <input type="read" name="fileTitle" placeholder="Enter a title">
         <input type="file" name="uploadedFile">
         {% csrf_token %}
         <input type="submit" value="Upload">
     </form>
     <div>
-        <label>월급종합유형1</label>
-        <form action="{% url 'excel:downloadFile'  %}">
-        <button type="submit">
-        다운로드
-        </button>
-    </form>
+        <label>Transformation</label>
+        <form action="{% url 'excel:payment'  %}" name="payment">
+        <button type="submit">payment</button>
+        </form>
+        <form action="{% url 'excel:taxfree'  %}" name="taxfree">
+        <button type="submit">taxfree</button>
+        </form>
+
+    </div>
+    <div>
+        <label>Download</label>
+        <form action="{% url 'excel:downloadPayment'  %}">
+        <button type="submit">division</button>
+        </form>
+        <form action="{% url 'excel:downloadTaxfree'  %}">
+        <button type="submit">subtraction</button>
+        </form>
     </div>
 </body>
 </html>

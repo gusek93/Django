@@ -9,15 +9,15 @@ class Document(models.Model):
     dateTimeOfUpload = models.DateTimeField(auto_now=True)
 
 
-class SalarySum(models.Model):
+class TaxfreeSubtraction(models.Model):
     title = models.CharField(max_length=100)
-    uploadedFile = models.FileField(upload_to="salarySum/")
+    uploadedFile = models.FileField(upload_to="taxfreeSubtraction/")
     dateTimeOfUpload = models.DateTimeField(auto_now=True)
 
 
-class SalaryCalculate(models.Model):
+class PaymentDivision(models.Model):
     title = models.CharField(max_length=100)
-    uploadedFile = models.FileField(upload_to="salaryCalculate/")
+    uploadedFile = models.FileField(upload_to="paymentDivision/")
     dateTimeOfUpload = models.DateTimeField(auto_now=True)
 
 
