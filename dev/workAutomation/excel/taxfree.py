@@ -13,8 +13,6 @@ import warnings
 file_path = glob.glob('./media/taxfreeSubtraction/*')
 list_excel = [file for file in file_path if file.endswith(".xlsx")]
 
-
-
 def taxfree():
     excelpath = list_excel[0]
     with warnings.catch_warnings(record=True):
@@ -60,10 +58,7 @@ def taxfree():
     salcaculater2 = pd.DataFrame(salcaculater2)
     
     result = pd.concat([num_list_data,name_list_data,car_list_data,run_list_data,sal_list_data,salcaculater2], axis=1)
-    result.columns = ["사원번호","사원명","차량유지비","식대","급여","결과"]
-    print(result)
-    
-    
+
     #df.to_excel('../media/result/계산성공.xlsx')
     result.to_excel('./media/result/taxfree/빼기성공.xlsx')
     #print(num_list,name_list,car_list,run_list)

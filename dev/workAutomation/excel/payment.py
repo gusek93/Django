@@ -13,7 +13,6 @@ import warnings
 file_path = glob.glob('./media/paymentDivision/*')
 list_excel = [file for file in file_path if file.endswith(".xlsx")]
 
-
 def payment():
     excelpath = list_excel[0]
     with warnings.catch_warnings(record=True):
@@ -55,7 +54,6 @@ def payment():
     print(result)
 
     result.to_excel('./media/result/payment/나누기성공.xlsx')
-    return result
 
 
 #payment()

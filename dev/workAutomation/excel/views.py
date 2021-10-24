@@ -16,6 +16,10 @@ def uploadFile(request):
         fileTitle = request.POST["fileTitle"]
         uploadedFile = request.FILES["uploadedFile"]
         
+<<<<<<< HEAD
+=======
+
+>>>>>>> f8b8e9afdd0ef0df52b69a684076ecd612bac078
         if "나누기" == fileTitle:        
             file_path = os.path.abspath("media/paymentDivision/")
             shutil.rmtree(file_path)
@@ -26,8 +30,12 @@ def uploadFile(request):
                 uploadedFile=uploadedFile
             )
             paymentdivision.save()
+<<<<<<< HEAD
             #print("시작합니다")
             #payment.payment()
+=======
+            payment.payment()
+>>>>>>> f8b8e9afdd0ef0df52b69a684076ecd612bac078
             
 
         elif "사원명부" == fileTitle:
@@ -51,6 +59,7 @@ def uploadFile(request):
                 uploadedFile=uploadedFile
             )
             taxfreeSubtraction.save()
+<<<<<<< HEAD
             #taxfree.taxfree()
         else:
             data = {
@@ -58,6 +67,9 @@ def uploadFile(request):
             }
             JsonResponse(data)
         
+=======
+            taxfree.taxfree()
+>>>>>>> f8b8e9afdd0ef0df52b69a684076ecd612bac078
 
     return render(request, "excel/upload-file.html")
 
@@ -93,9 +105,15 @@ def downloadPayment(request):
 
     return response
 
+<<<<<<< HEAD
 def downloadTaxfree(request):
     file_path = os.path.abspath("media/result/taxfree/")
     file_name = os.path.basename("media/result/taxfree/빼기성공.xlsx")
+=======
+def downloadFile(request):
+    file_path = os.path.abspath("media/result/")
+    file_name = os.path.basename("media/result/12개월나누기.xlsx")
+>>>>>>> f8b8e9afdd0ef0df52b69a684076ecd612bac078
     fs = FileSystemStorage(file_path)
     response = FileResponse(fs.open(file_name, 'rb'),
                             content_type='application/vnd.ms-excel')
